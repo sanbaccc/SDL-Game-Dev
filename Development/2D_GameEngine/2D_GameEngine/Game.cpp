@@ -9,6 +9,10 @@ Description:
 */
 
 #include "Game.hpp"
+
+SDL_Texture *PlayerTex;
+SDL_Rect SrcR, DesR;
+
 Game::Game(){
 
 }
@@ -61,6 +65,10 @@ void Game::init(
 	}else {
 		isRunning = false;
 	}
+
+	SDL_Surface *tempSurface = IMG_Load("Assets/Player.png");
+	PlayerTex = SDL_CreateTextureFromSurface(renderer, tempSurface);
+	SDL_FreeSurface(tempSurface);
 }
 
 void Game::handlerEvents() {
@@ -78,12 +86,17 @@ void Game::handlerEvents() {
 }
 
 void Game::update() {
-
+	cnt++;
+	DesR.h = 64;
+	DesR.w = 64;
+	DesR.x = cnt;
+	std::cout << cnt << std::endl;
 }
 
 void Game::render() {
 	//clear render buffer
 	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, PlayerTex, NULL, &DesR);
 	//display renderer
 	SDL_RenderPresent(renderer);
 }
@@ -93,7 +106,7 @@ void Game::clean() {
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 	SDL_Quit();
-	std::cout << "Game Cleaned..." << std::endl;
+	std::cout << "Game Cleanned..." << std::endl;
 }
 
 bool Game::running() {

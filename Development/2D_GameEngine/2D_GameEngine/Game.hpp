@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include <stdio.h>
 #include <iostream>
+#include "SDL_image.h"
 
 class Game {
 public:
@@ -24,7 +25,8 @@ public:
 	bool running();
 
 private:
-	bool isRunning;
+	int cnt = 0;
+	bool isRunning = false;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
 
