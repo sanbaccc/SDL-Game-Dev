@@ -9,9 +9,10 @@ Description:
 */
 
 #include "Game.hpp"
+#include "TextureManager.hpp"
+#include "GameObject.hpp"
 
-SDL_Texture *PlayerTex;
-SDL_Rect SrcR, DesR;
+GameObject *Player;
 
 Game::Game(){
 
@@ -66,9 +67,7 @@ void Game::init(
 		isRunning = false;
 	}
 
-	SDL_Surface *tempSurface = IMG_Load("Assets/Player.png");
-	PlayerTex = SDL_CreateTextureFromSurface(renderer, tempSurface);
-	SDL_FreeSurface(tempSurface);
+	Player = new GameObject("Assets/Player.png", renderer, 0, 0);
 }
 
 void Game::handlerEvents() {
@@ -86,17 +85,13 @@ void Game::handlerEvents() {
 }
 
 void Game::update() {
-	cnt++;
-	DesR.h = 64;
-	DesR.w = 64;
-	DesR.x = cnt;
-	std::cout << cnt << std::endl;
+	Player->Update();
 }
 
 void Game::render() {
 	//clear render buffer
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, PlayerTex, NULL, &DesR);
+	Player->Render();
 	//display renderer
 	SDL_RenderPresent(renderer);
 }
